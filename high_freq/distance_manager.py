@@ -22,7 +22,8 @@ audio_waves = []
 def alert_user(scheduler):
 	scheduler.enter(ALERT_PERIOD_SEC, ALERT_PRI, alert_user, (scheduler, ))
 	# print(f"ALERT TYPE {alert_mode}! @ {time.ctime()}")
-	simpleaudio.play_buffer(audio_waves[alert_mode], 1, 2, ALERT_SAMPLING_RATE)
+	if alert_mode:
+		simpleaudio.play_buffer(audio_waves[alert_mode], 1, 2, ALERT_SAMPLING_RATE)
 
 
 def update_alert_mode(scheduler, distance_sensor):
