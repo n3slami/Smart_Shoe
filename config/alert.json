@@ -1,0 +1,6 @@
+[
+	{ "threshold": 10, "frequency": 440, "duration": 0.25 },
+	{ "threshold": 20, "frequency": 440, "duration": 0.20 },
+	{ "threshold": 30, "frequency": 440, "duration": 0.10 },
+	{ "threshold": 40, "frequency": 440, "duration": 0.05 }
+]
