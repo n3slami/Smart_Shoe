@@ -9,5 +9,6 @@ def run():
 	scheduler = sched.scheduler(time.time, time.sleep)
 	setup_forward_distance_tasks(scheduler)
 	
+	print("High frequency tasks setup done")
 	scheduler.run()
 	pause()

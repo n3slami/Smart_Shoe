@@ -4,7 +4,7 @@ import simpleaudio
 import time
 import json
 
-TRIG_PIN, ECHO_PIN = 14, 15
+TRIG_PIN, ECHO_PIN = 23, 24
 DIST_M_MAX = 2
 TO_CM_SCALING = 100
 
@@ -22,8 +22,7 @@ audio_waves = []
 def alert_user(scheduler):
 	scheduler.enter(ALERT_PERIOD_SEC, ALERT_PRI, alert_user, (scheduler, ))
 	# print(f"ALERT TYPE {alert_mode}! @ {time.ctime()}")
-	if alert_mode:
-		simpleaudio.play_buffer(audio_waves[alert_mode], 1, 2, ALERT_SAMPLING_RATE)
+	simpleaudio.play_buffer(audio_waves[alert_mode], 1, 2, ALERT_SAMPLING_RATE)
 
 
 def update_alert_mode(scheduler, distance_sensor):
