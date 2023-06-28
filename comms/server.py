@@ -25,6 +25,13 @@ PAGE="""\
 </body>
 </html>
 """
+REDIRECTION_PREFIX="""\
+<html>
+<meta http-equiv="Refresh" content="0; URL=https://maps.google.com/maps?q="""
+REDIRECTION_POSTFIX="""
+"/>
+</html>
+"""
 RECORD_GPS_PERIOD_SEC = 1
 SAVE_GPS_DATA_FREQ = 10
 RECORD_GPS_PRI = 1
@@ -64,6 +71,17 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(location_history).encode(encoding="utf-8"))
+        elif self.path == '/current_location':
+            redirection_page = REDIRECTION_PREFIX + \
+                               f"({location_history[-1]['lat']},{location_history[-1]['lng']})" + \
+                               REDIRECTION_POSTFIX
+            redirection_page = redirection_page.encode('utf-8')
+            
+            self.send_response(200)
+            self.send_header('Content-Type', 'text/html')
+            self.send_header('Content-Length', len(redirection_page))
+            self.end_headers()
+            self.wfile.write(redirection_page)
         elif self.path == '/stream.mjpg':
             self.send_response(200)
             self.send_header('Age', 0)

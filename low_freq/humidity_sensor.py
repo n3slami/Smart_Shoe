@@ -6,6 +6,7 @@ import json
 DHT_SENSOR = Adafruit_DHT.DHT22
 DATA_PIN = 4
 HUMIDITY_THRESHOLD = 10
+HYSTERESIS = 1
 HUMIDITY_PERIOD_SEC = 30
 HUMIDITY_PRI = 1
 
@@ -21,14 +22,14 @@ def get_humidity_and_temprature(scheduler):
 	print(f"{time.ctime()} -- Humidity: {humidity}, Temprature: {temprature}")
 	
 	global alert_state
-	if humidity > HUMIDITY_THRESHOLD:
-		if alert_state == 0:
+	if alert_state == 0:
+		if humidity > HUMIDITY_THRESHOLD + HYSTERESIS:
 			entering_audio.play()
-		alert_state = 1
+			alert_state = 1
 	else:
-		if alert_state == 1:
+		if humidity < HUMIDITY_THRESHOLD - HYSTERESIS:
 			exiting_audio.play()
-		alert_state = 0
+			alert_state = 0
 
 
 def setup_tasks(scheduler):
